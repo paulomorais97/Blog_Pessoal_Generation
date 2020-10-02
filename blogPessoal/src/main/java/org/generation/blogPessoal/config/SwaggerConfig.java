@@ -25,7 +25,7 @@ public class SwaggerConfig {
         return new Docket(DocumentationType.SWAGGER_2)
                 .select()
                 .apis(RequestHandlerSelectors.basePackage("org.generation.blogPessoal"))
-                .paths(regex("/api.*"))
+                .paths(regex("/postagens.*"))
                 .build()
                 .apiInfo(metaInfo());
     }
@@ -33,7 +33,7 @@ public class SwaggerConfig {
 	private ApiInfo metaInfo() {
 
         ApiInfo apiInfo = new ApiInfo(
-                "Blog Pessoal",
+                "API Blog Pessoal",
                 "Created by Paulo Morais",
                 "1.0",
                 "Terms of Service",
