@@ -29,13 +29,13 @@ public class PostagemController {
 	
 	@GetMapping
 	@ApiOperation(value="Lista todos as postagens")
-	public ResponseEntity<List<Postagem>> GetAll(){
+	public ResponseEntity<List<Postagem>> findAllPostagem(){
 		return ResponseEntity.ok(repository.findAll());
 	}
 	
 	@GetMapping("/{id}")
 	@ApiOperation(value="Lista as postagens por ID")
-	public ResponseEntity<Postagem> GetById(@PathVariable long id){
+	public ResponseEntity<Postagem> findByIdPostagem(@PathVariable long id){
 		return repository.findById(id).map(resp -> ResponseEntity.ok(resp)).orElse(ResponseEntity.notFound().build());
 		
 		// Pode retorna tanto um objeto do tipo postagem
@@ -44,13 +44,13 @@ public class PostagemController {
 	
 	@GetMapping("/titulo/{titulo}")
 	@ApiOperation(value="Lista as postagens por titulo")
-	public ResponseEntity<List<Postagem>> GetByTitulo(@PathVariable String titulo){
+	public ResponseEntity<List<Postagem>>FindByTituloPostagem(@PathVariable String titulo){
 		return ResponseEntity.ok(repository.findAllByTituloContainingIgnoreCase(titulo));
 	}
 	
 	@PostMapping
 	@ApiOperation(value="Insere uma postagem")
-	public ResponseEntity<Postagem> post (@RequestBody Postagem postagem){
+	public ResponseEntity<Postagem> postPostagem (@RequestBody Postagem postagem){
 	 return ResponseEntity.status(HttpStatus.CREATED).body(repository.save(postagem));
 	 
 	// SALVA OS DADOS DA POSTAGEM
@@ -58,13 +58,13 @@ public class PostagemController {
 	
 	@PutMapping
 	@ApiOperation(value="Atualiza / Altera uma postagem")
-	public ResponseEntity<Postagem> put (@RequestBody Postagem postagem){
+	public ResponseEntity<Postagem> putPostagem (@RequestBody Postagem postagem){
 		return ResponseEntity.status(HttpStatus.OK).body(repository.save(postagem));
 	}
 	
 	@DeleteMapping("/{id}")
 	@ApiOperation(value="Exclui uma postagem")
-	public void  delete(@PathVariable long id) {
+	public void  deletePostagem(@PathVariable long id) {
 		repository.deleteById(id);
 	}
 	
