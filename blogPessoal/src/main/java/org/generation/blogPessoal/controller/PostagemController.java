@@ -21,55 +21,53 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
 @RestController
-@RequestMapping(value="/postagens")
-@Api(value="API Blog Pessoal")
+@RequestMapping(value = "/postagens")
+@Api(value = "API Blog Pessoal")
 @CrossOrigin("*")
 public class PostagemController {
 
 	@Autowired
 	private PostagemRepository repository;
-	
+
 	@GetMapping
-	@ApiOperation(value="Lista todos as postagens")
-	public ResponseEntity<List<Postagem>> findAllPostagem(){
+	@ApiOperation(value = "Listagem de todas as postagens")
+	public ResponseEntity<List<Postagem>> findAllPostagem() {
 		return ResponseEntity.ok(repository.findAll());
 	}
-	
+
 	@GetMapping("/{id}")
-	@ApiOperation(value="Lista as postagens por ID")
-	public ResponseEntity<Postagem> findByIdPostagem(@PathVariable long id){
+	@ApiOperation(value = "Listagem de postagens por ID")
+	public ResponseEntity<Postagem> findByIdPostagem(@PathVariable long id) {
 		return repository.findById(id).map(resp -> ResponseEntity.ok(resp)).orElse(ResponseEntity.notFound().build());
-		
+
 		// Pode retorna tanto um objeto do tipo postagem
 		// como um notFound caso tenha um erro na requisição
 	}
-	
+
 	@GetMapping("/titulo/{titulo}")
-	@ApiOperation(value="Lista as postagens por titulo")
-	public ResponseEntity<List<Postagem>>FindByTituloPostagem(@PathVariable String titulo){
+	@ApiOperation(value = "Listagem de postagens por titulo")
+	public ResponseEntity<List<Postagem>> FindByTituloPostagem(@PathVariable String titulo) {
 		return ResponseEntity.ok(repository.findAllByTituloContainingIgnoreCase(titulo));
 	}
-	
+
 	@PostMapping
-	@ApiOperation(value="Insere uma postagem")
-	public ResponseEntity<Postagem> postPostagem (@RequestBody Postagem postagem){
-	 return ResponseEntity.status(HttpStatus.CREATED).body(repository.save(postagem));
-	 
-	// SALVA OS DADOS DA POSTAGEM
+	@ApiOperation(value = "Inserir postagem")
+	public ResponseEntity<Postagem> postPostagem(@RequestBody Postagem postagem) {
+		return ResponseEntity.status(HttpStatus.CREATED).body(repository.save(postagem));
+
+		// SALVA OS DADOS DA POSTAGEM
 	}
-	
-	@PutMapping
-	@ApiOperation(value="Atualiza / Altera uma postagem")
-	public ResponseEntity<Postagem> putPostagem (@RequestBody Postagem postagem){
+
+	@PutMapping("/{id}")
+	@ApiOperation(value = "Atualizar postagem")
+	public ResponseEntity<Postagem> putPostagem(@PathVariable Long id, @RequestBody Postagem postagem) {
 		return ResponseEntity.status(HttpStatus.OK).body(repository.save(postagem));
 	}
-	
+
 	@DeleteMapping("/{id}")
-	@ApiOperation(value="Exclui uma postagem")
-	public void  deletePostagem(@PathVariable long id) {
+	@ApiOperation(value = "Excluir postagem")
+	public void deletePostagem(@PathVariable long id) {
 		repository.deleteById(id);
 	}
-	
-	
-	
+
 }
