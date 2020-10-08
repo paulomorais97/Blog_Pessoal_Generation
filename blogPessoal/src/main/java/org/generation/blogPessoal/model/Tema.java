@@ -26,10 +26,10 @@ public class Tema {
 
 	@OneToMany(mappedBy = "tema", cascade = CascadeType.ALL) // Um para muitos | Cascade -> Se um tema sofrer alteração,
 																// todas as postagens daquele tema alteram tbm
-	@JsonIgnoreProperties("tema") // ignora a propriedade tema na calsse postagem
+	@JsonIgnoreProperties("tema") // ignora a propriedade tema na classe postagem
 	private List<Postagem> postagem;
 
-	public long getId() {
+	public long getId() {	
 		return id;
 	}
 

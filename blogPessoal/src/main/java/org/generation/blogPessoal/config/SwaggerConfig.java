@@ -1,50 +1,35 @@
 package org.generation.blogPessoal.config;
 
-import static springfox.documentation.builders.PathSelectors.regex;
-
-import java.util.ArrayList;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-
+import springfox.documentation.builders.ApiInfoBuilder;
+import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
 import springfox.documentation.service.ApiInfo;
 import springfox.documentation.service.Contact;
-import springfox.documentation.service.VendorExtension;
 import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
-@Configuration
 @EnableSwagger2
+@Configuration
 public class SwaggerConfig {
-	
-	
 	@Bean
-    public Docket postagemApi() {
-        return new Docket(DocumentationType.SWAGGER_2)
-                .select()
-                .apis(RequestHandlerSelectors.basePackage("org.generation.blogPessoal"))
-                .paths(regex("/postagens.*"))
-                .build()
-                .apiInfo(metaInfo());
-    }
-	
-	private ApiInfo metaInfo() {
+	public Docket docket() {
+		return new Docket(DocumentationType.SWAGGER_2).select()
+				.apis(RequestHandlerSelectors.basePackage("org.generation.blogPessoal"))
+				.paths(PathSelectors.any()).build().apiInfo(apiInfo());
+	}
 
-        ApiInfo apiInfo = new ApiInfo(
-                "API Blog Pessoal",
-                "Created by Paulo Morais",
-                "1.0",
-                "Terms of Service",
-                new Contact("Paulo Morais", "https://github.com/paulomorais97",
-                        "paulo-2109@hotmail.com"),
-                "Apache License Version 2.0",
-                "https://www.apache.org/licesen.html", new ArrayList<VendorExtension>()
-        );
+	private ApiInfo apiInfo() {
+		return new ApiInfoBuilder().title("Blog Pessoal").description("API Blog Pessoal").version("1.0")
+				.contact(contact()).build();
+	}
 
-        return apiInfo;
-    }
-	
-
+	private Contact contact() {
+		return new Contact("Paulo Morais", "https://github.com/paulomorais97",
+				"Estudante full stack Java");
+	}
 }
+
