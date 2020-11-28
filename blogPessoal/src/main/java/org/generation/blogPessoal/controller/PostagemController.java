@@ -23,7 +23,7 @@ import io.swagger.annotations.ApiOperation;
 @RestController
 @RequestMapping(value = "/postagens")
 @Api(value = "Postagens")
-@CrossOrigin("*")
+@CrossOrigin(origins="*")
 public class PostagemController {
 
 	@Autowired
